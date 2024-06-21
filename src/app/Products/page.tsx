@@ -6,8 +6,7 @@ import Link from "next/link";
 function Products() {
    return (
       <>
-         <Header />
-         <div className="ml-[250px] px-6 py-5 ">
+         <div className=" px-6 py-5 ">
             <h1>All Products</h1>
             <Link href="/Products/add" className="inline-block mt-4">
                <Button type="button" className="bg-green-400">

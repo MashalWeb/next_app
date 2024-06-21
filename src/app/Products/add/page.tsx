@@ -6,8 +6,8 @@ import React from "react";
 function AddProducts() {
    return (
       <>
-         <Header />
-         <div className=" ml-[250px] px-6 py-5 ">
+
+         <div className=" px-6 py-5 ">
             <h1 className="m-y-4">Add Product</h1>
             <form action="">
                <div className="sm:w-[600px] w-full mt-3">

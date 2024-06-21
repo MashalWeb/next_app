@@ -48,8 +48,7 @@ function Dashboard() {
    const handledelete = () => {};
    return (
       <>
-         <Header />
-         <div className="ml-[250px] px-6 py-5 ">
+         <div className=" px-6 py-5 ">
             <div className="w-full bg-white/50 rounded px-5 flex justify-between p-2 py-3">
                <div className="info bg-white px-2 py-1 w-[180px] rounded-full shadow-lg">
                   <Image

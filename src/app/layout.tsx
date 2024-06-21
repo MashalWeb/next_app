@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import Header from "@/components/header/Header";
 export const metadata: Metadata = {
    title: "Ecommerce App",
    description: "Ecommerce App By Mashal Horara",
@@ -23,7 +24,12 @@ export default function RootLayout({
       <html lang="en">
          <AuthProvider>
             <body>
+               <div className="main flex" >
+               <Header />
+               <div className="content flex-grow">
                {children}
+               </div>
+               </div>
                <Toaster />
             </body>
          </AuthProvider>
