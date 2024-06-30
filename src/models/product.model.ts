@@ -1,13 +1,44 @@
-import mongoose, { Schema, mongo } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema(
    {
-      productName: { type: String, require: true },
-      description: String,
-      price: { type: String, require: true },
-      images: [{ type: String }],
-      category: { type: mongoose.Types.ObjectId, ref: "Category" },
-      properties: [{ type: Object }],
+      productName: {
+         type: String,
+         require: true,
+      },
+      productDescription: {
+         type: String,
+         require: true 
+      },
+      price: { 
+         type: String, 
+         require: true 
+      },
+      mainImages: { 
+         type: String, 
+         require: true 
+      },
+      moreImages: [
+         {
+            type: String, 
+            default: [] 
+         }
+      ],
+      category: { 
+         type: mongoose.Types.ObjectId, 
+         ref: "Category" 
+      },
+      properties: [
+         { type: Object }
+      ],
+      stock: {
+         type: Number, 
+         require: true
+      },
+      addedBy: {
+         type: mongoose.Types.ObjectId,
+         ref: "Admain"
+      }
    },
    { timestamps: true }
 );
