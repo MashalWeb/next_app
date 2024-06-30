@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { Upload } from "lucide-react";
-
+import toast from "react-hot-toast";
 function AddProducts() {
    const [categories, setCategories] = useState([]);
    const [properties, setProperties]: any = useState([]);
@@ -19,6 +19,7 @@ function AddProducts() {
    const [stock, setstock] = useState("");
    const [ProductName, setProductName] = useState("");
    const UserID = useSession().data?.user._id;
+   const [links, setlinks] = useState([]);
 
    useEffect(() => {
       fetchCategories();
@@ -42,11 +43,45 @@ function AddProducts() {
          value: "",
       });
    };
+
+   const uploadImages = async (files: any) => {
+      const data = new FormData();
+      data.append("mainImages", files[0]);
+
+      try {
+         const res = await axios.post("/api/upload", data);
+         toast.success(res.data.message);
+
+         setlinks((prev): any => {
+            return [...prev, res.data.filePath];
+         });
+      } catch (error) {
+         const err = error as AxiosError<any>;
+
+         console.log(error);
+         toast.error(err.response?.data.message);
+      }
+   };
+
+   const AddProduct = async (ev: FormEvent) => {
+      ev.preventDefault();
+
+      const data = {
+         productName: ProductName,
+         productDescription: desciption,
+         price: price,
+         Images: links,
+         category: Category,
+         properties: properties,
+         stock: stock,
+         addedBy: UserID,
+      };
+   };
    return (
       <>
          <div className=" px-6 py-5 ">
             <h1 className="m-y-4">Add Product</h1>
-            <form action="">
+            <form onSubmit={AddProduct}>
                <div className="sm:w-[600px] w-full mt-3">
                   <label htmlFor="">Product Name</label>
                   <Input
@@ -123,12 +158,14 @@ function AddProducts() {
                </div>
 
                <div className="sm:w-[600px] w-full mt-3">
-                  <label htmlFor="">Upload Main Image</label>
+                  <label htmlFor="">Upload Images</label>
                </div>
                <div className="sm:w-[600px] w-full mt-3 flex flex-row gap-2 flex-wrap align-middle justify-start ">
                   <div className="relative">
                      <Input
                         type="file"
+                        name="mainImages"
+                        onChange={(ev) => uploadImages(ev.target.files)}
                         className="shadow w-28 h-28 bg-white rounded-xl "
                      />
                      <Upload
@@ -136,21 +173,16 @@ function AddProducts() {
                         className="absolute top-1/2 left-1/2 -translate-x-2/4  -translate-y-2/4"
                      />
                   </div>
-               </div>
-               <div className="sm:w-[600px] w-full mt-3">
-                  <label htmlFor="">Upload Other Images</label>
-               </div>
-               <div className="sm:w-[600px] w-full mt-3 flex flex-row gap-2 flex-wrap align-middle justify-start ">
-                  <div className="relative">
-                     <Input
-                        type="file"
+                  {links.map((dev: any, index: any) => (
+                     <div
                         className="shadow w-28 h-28 bg-white rounded-xl "
-                     />
-                     <Upload
-                        size={30}
-                        className="absolute top-1/2 left-1/2 -translate-x-2/4  -translate-y-2/4"
-                     />
-                  </div>
+                        key={index}
+                     >
+                        <p className="text-wrap text-[30px]">
+                           {dev.split("")[1]}
+                        </p>
+                     </div>
+                  ))}
                </div>
                <div className="sm:w-[600px] w-full mt-3">
                   <label htmlFor="">Product Stock</label>

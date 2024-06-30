@@ -14,14 +14,10 @@ const productSchema = new Schema(
          type: String, 
          require: true 
       },
-      mainImages: { 
-         type: String, 
-         require: true 
-      },
-      moreImages: [
+      
+      Images: [
          {
-            type: String, 
-            default: [] 
+            type: String,  
          }
       ],
       category: { 
