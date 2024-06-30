@@ -4,12 +4,12 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req:NextRequest){
     await connection()
-    const {categoryName, Properties} = await req.json();
+    const {categoryName} = await req.json();
     try {
-        if(!categoryName || Properties.length <0){
+        if(!categoryName){
             return NextResponse.json({
                 success: false,
-                message: "All Fields are required"
+                message: "Name is Required"
             },{status:400})
         }
         const isAleradyExist = await Category.findOne({name: categoryName})
@@ -21,7 +21,6 @@ export async function POST(req:NextRequest){
         }
         const newCategory = new Category({
             name: categoryName,
-            Properties
         })
         await newCategory.save()
 
@@ -46,6 +45,40 @@ export async function GET(req: NextRequest){
     await connection()
     return NextResponse.json({
         success: true,
-        categories: await Category.find({})
+        categories: (await Category.find({})).map((val) => val)
     }, {status: 200})
+}
+
+
+export async function PUT(req: NextRequest){
+    await connection()
+    const {id, categoryName} = await req.json()
+
+    if(!id) return NextResponse.json({
+        message: "not found"
+    })
+    
+    await Category.findByIdAndUpdate({_id: id}, {name: categoryName}, {new: true})
+    return NextResponse.json({
+        message: "Category Updated Successfully",
+        success: true
+    }, {status: 202})
+}
+
+
+export async function DELETE( req:NextRequest) {
+    const {searchParams} = new URL(req.url);
+    const params ={
+        deleteID: searchParams.get("deleteID")
+    }
+
+    const {deleteID} = params;
+    if(!deleteID) return NextResponse.json({message: "Not Found"})
+    
+    await Category.findByIdAndDelete({_id: deleteID},{new: true})
+
+    return NextResponse.json({
+        success: true,
+        message: "category delete successfully"
+    }, {status: 202})
 }

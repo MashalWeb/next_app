@@ -1,59 +1,75 @@
 "use client";
-import { Loader, RefreshCcwIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import { RefreshCcwDot } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
 function Categories() {
-   const [property, setProperty]: any = useState([]);
-   const [newProp, setNewProp] = useState("");
-   const [newPropValue, setNewPropValue] = useState("");
-   const [Category, setCategroy] = useState("")
-   const handleAddProperty = () => {
-      if (newProp.trim() !== "") {
-         const newCategory: any = {
-            name: newProp,
-            value: newPropValue,
-            // Initialize other properties
-         };
-         setProperty([...property, newCategory]);
-         setNewProp("");
-         setNewPropValue("");
-      }
+   const [categories, setcategroies]: any = useState([]);
+   const [categoryName, setCategroyName] = useState("");
+   const [editCategory, setEditCategory] = useState("");
+   const [editID, setEditID] = useState("");
+   useEffect(() => {
+      getCategories();
+   }, []);
+
+   const getCategories = async () => {
+      const res = await axios.get("/api/categories");
+      setcategroies(res.data?.categories);
+      console.log(categories);
    };
 
-   const handleAddCategory = async function() {
+   const handleAddCategory = async function () {
       try {
-         const res = await axios.post("/api/categories",
-            {categoryName:Category,Properties:property}
-         )
-         toast.success(res.data.message)
-         setCategroy("")
-         setProperty([])
-         
-      } catch (error ) {
-         const err = error as AxiosError<any>
-         toast.error(err.response?.data.message || "Unexpected Error")
+         if (editCategory !== "") {
+            const res = await axios
+               .put("/api/categories", {
+                  categoryName: editCategory,
+                  id: editID,
+               })
+               .then((res) => {
+                  toast.success(res.data.message);
+                  setEditCategory("");
+                  setEditID("");
+               });
+         } else {
+            const res = await axios.post("/api/categories", {
+               categoryName: categoryName,
+            });
 
+            toast.success(res.data.message);
+            setCategroyName("");
+         }
+      } catch (error) {
+         const err = error as AxiosError<any>;
+         toast.error(err.response?.data.message || "Unexpected Error");
       }
-   }
-   const getCategories = async () => {
-      const {data} = await axios.get("/api/categories")
-      console.log(data.categories);
-      
-   }
+      getCategories();
+   };
+
+   const handleDelete = async (deleteID: any) => {
+      await axios
+         .delete("/api/categories?deleteID=" + deleteID)
+         .then((res) => toast.success("Delete Successfully"));
+      getCategories();
+   };
+
+   const EditCategory = (category: any, id: any) => {
+      setEditCategory(category.name);
+      setEditID(id);
+   };
+
    return (
       <>
          <div className=" px-6 py-5 w-full">
             <div className="p-3 w-full flex align-middle justify-evenly gap-4 flex-wrap">
-            <form
-               onSubmit={(e) => e.preventDefault()}
-               action=""
-               className="sm:w-[450px] w-full bg-white rounded-lg px-6 shadow-xl py-6 mt-4"
-            >
-                   <h1 className="text-center mb-4">Add Categories</h1>
+               <form
+                  onSubmit={(e) => e.preventDefault()}
+                  action=""
+                  className="sm:basis-9/12 w-full bg-white rounded-lg px-6 shadow-xl py-6 mt-4"
+               >
+                  <h1 className="text-center mb-4">Add Categories</h1>
                   <label htmlFor="" className="mt-4 font-semibold">
                      Category Name
                   </label>
@@ -61,68 +77,63 @@ function Categories() {
                      type="text"
                      placeholder="Enter Category Name"
                      className="w-full bg-white py-2 px-1 mt-3"
-                     value={Category}
-                     onChange={(e)=> setCategroy( e.target.value)}
+                     value={editCategory === "" ? categoryName : editCategory}
+                     onChange={(ev) =>
+                        editCategory === ""
+                           ? setCategroyName(ev.target.value)
+                           : setEditCategory(ev.target.value)
+                     }
                   />
-                  <div className="my-4">
-                     <h2 className="font-semibold">Add Properties</h2>
-                     <Input
-                        type="text"
-                        value={newProp}
-                        onChange={(e) => setNewProp(e.target.value)}
-                        placeholder="Enter property name"
-                        className="mt-3"
-                     />
-                     <Input
-                        type="text"
-                        value={newPropValue}
-                        onChange={(e) => setNewPropValue(e.target.value)}
-                        placeholder="Enter property value"
-                        className="mt-3"
-                     />
-                     <Button className="mt-3" onClick={handleAddProperty}>
-                        Add Property
-                     </Button>
-
-                     <ul className=" mt-4">
-                        {property.map((prop: any, index: any) => (
-                           <li key={index} className="flex">
-                              <span className="w-[50%] mr-2 font-semibold bg-gray-50 shadow my-1 p-2 rounded-md">{prop.name}</span>
-                              <span className="w-[50%] mr-2 font-semibold bg-gray-50 shadow my-1 p-2 rounded-md">{prop.value}</span>
-                           </li>
-                        ))}
-                     </ul>
-                  </div>
-                  <Button type="submit" onClick={handleAddCategory} className="bg-green-500 mt-4">
-                     Add Category{" "}
+                  <Button
+                     type="submit"
+                     onClick={handleAddCategory}
+                     className="bg-green-500 mt-4"
+                  >
+                     {editCategory ? "Save" : "Add Category"}
                   </Button>
-            </form>
-            <div
-               className="sm:w-[450px] relative w-full bg-white rounded-lg px-3 shadow-xl py-6 mt-4"
-            >
-                  <RefreshCcwIcon className="absolute cursor-pointer top-5 left-3" onClick={getCategories}/>
-                   <h1 className="text-center mb-4">Categories List</h1>
-
-                  <div className="flex justify-between bg-gray-100 mb-2 gap-1 font-semibold p-2 px-6">
-                  <span>Name</span>
-                  <span className="ml-[70px]">Property</span>
-                  <span>options</span>
+               </form>
+               <div className="sm:basis-9/12 w-full bg-white rounded-lg px-6 shadow-xl py-6 mt-4 relative">
+                  <h1 className="text-center mb-4">Categories List</h1>
+                  {categories.length > 0 ? (
+                     categories.reverse().map((category: any, index: any) => (
+                        <div
+                           key={index}
+                           className="flex align-middle gap-x-1 mb-2"
+                        >
+                           <Input
+                              type="text"
+                              className="w-full bg-white py-2 px-1"
+                              value={category.name}
+                              readOnly
+                           />
+                           <Button
+                              variant={"destructive"}
+                              type="button"
+                              onClick={(ev) => handleDelete(category._id)}
+                           >
+                              Delete
+                           </Button>
+                           <Button
+                              variant={"secondary"}
+                              type="button"
+                              onClick={(ev) =>
+                                 EditCategory(category, category._id)
+                              }
+                           >
+                              Edit
+                           </Button>
+                        </div>
+                     ))
+                  ) : (
+                     <p>Nothing</p>
+                  )}
+                  <div
+                     className=" bg-slate-100 cursor-pointer absolute top-4 left-4 p-2 rounded flex justify-center align-middle shadow-lg"
+                     onClick={getCategories}
+                  >
+                     <RefreshCcwDot />
                   </div>
-                  <div className="flex bg-gray-50 mb-2 gap-1 p-2">
-                  <Input
-                     type="text"
-                     value={"Iphone"}
-                     readOnly
-                     className="w-full bg-white py-2 px-1 text-[13px]"
-                  />
-                  <select name="property" id="" className="border rounded-lg px-5">
-                     <option value="">IPhones</option>
-                     <option value="">laptops</option>
-                     <option value="">mobiles</option>
-                  </select>
-                  <Button variant={"destructive"}>Delete</Button>
-                  </div>
-            </div>
+               </div>
             </div>
          </div>
       </>
