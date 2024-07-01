@@ -1,12 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 function AddProducts() {
+   const router = useRouter();
    const [categories, setCategories] = useState([]);
    const [properties, setProperties]: any = useState([]);
    const [property, setproperty] = useState({
@@ -63,9 +66,7 @@ function AddProducts() {
       }
    };
 
-   const AddProduct = async (ev: FormEvent) => {
-      ev.preventDefault();
-
+   const AddProduct = async () => {
       const data = {
          productName: ProductName,
          productDescription: desciption,
@@ -76,12 +77,31 @@ function AddProducts() {
          stock: stock,
          addedBy: UserID,
       };
+
+      try {
+         const res = await axios.post("/api/products", data);
+         toast(res.data.message);
+
+         setPrice("");
+         setdesciption("");
+         setCategory("");
+         setstock("");
+         setProductName("");
+         setlinks([]);
+         setProperties([]);
+
+         router.push("/Products");
+      } catch (error) {
+         console.log("ERROR : ", error);
+         const err = error as AxiosError<any>;
+         toast.error(err.response?.data.message || "Unexpected Error");
+      }
    };
    return (
       <>
          <div className=" px-6 py-5 ">
             <h1 className="m-y-4">Add Product</h1>
-            <form onSubmit={AddProduct}>
+            <form onSubmit={(ev) => ev.preventDefault()}>
                <div className="sm:w-[600px] w-full mt-3">
                   <label htmlFor="">Product Name</label>
                   <Input
@@ -203,7 +223,11 @@ function AddProducts() {
                   />
                </div>
                <div className="sm:w-[600px] w-full mt-3">
-                  <Button className="bg-green-400" type="submit">
+                  <Button
+                     className="bg-green-400"
+                     type="submit"
+                     onClick={AddProduct}
+                  >
                      Add Product
                   </Button>
                </div>

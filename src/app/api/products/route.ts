@@ -1,6 +1,8 @@
 import { NextRequest , NextResponse } from "next/server";
 import productModel from "@/models/product.model";
 import connection from "@/lib/dbConnection";
+import Category from "@/models/category.model";
+import Products from "@/app/Products/page";
 
 export async function POST(req:NextRequest) {
     await connection();
@@ -11,6 +13,13 @@ export async function POST(req:NextRequest) {
     if ((productDescription || productName || price || category || stock || addedBy) === ""){
         return NextResponse.json({
             message: "Some Fields Are Missing",
+            success: false
+        }) 
+    }
+    const categoryName = await Category.findOne({name: category})
+    if(!category){
+        return NextResponse.json({
+            message: "Category is missing",
             success: false
         })
     }
@@ -34,7 +43,7 @@ export async function POST(req:NextRequest) {
         productDescription,
         productName,
         price,
-        category,
+        category: categoryName._id,
         properties,
         stock,
         addedBy
@@ -47,4 +56,12 @@ export async function POST(req:NextRequest) {
         success: true,
         Product
     })
+}
+
+
+export async function GET(req:NextRequest) {
+    return NextResponse.json({
+        message: "Products Fetch Successfully",
+        products: await productModel.find({},null, {sort: "createdAt"}).populate(["category", "addedBy"])
+    }, {status: 200})
 }
