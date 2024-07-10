@@ -9,7 +9,7 @@ function Header() {
 
    return (
       <>
-         <aside className="sidebar w-[250px] h-screen bg-white hidden sm:block">
+         <div className="sidebar w-[250px] min-h-screen s-sh hidden sm:block rounded-r-[20px]">
             <Link
                href={"/Dashboard"}
                className="w-full flex align-middle justify-startmt-5 py-6"
@@ -152,7 +152,7 @@ function Header() {
 
                <h2 className="mt-[2px] text-[17px] font-medium">Setting</h2>
             </Link>
-         </aside>
+         </div>
       </>
    );
 }

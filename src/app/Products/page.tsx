@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 function Products() {
    const [products, setproducts] = useState([]);
-
+   const [productId, setProductId] = useState("");
    useEffect(() => {
       fetchProducts();
    }, []);
@@ -16,10 +16,20 @@ function Products() {
       try {
          const res = await axios.get("/api/products");
          setproducts(res.data.products);
-
          console.log(products);
       } catch (error) {
          toast.error("Something went wrong, Refreash the page");
+      }
+   };
+
+   const deleteProduct = async (productID: any) => {
+      try {
+         const res = await axios.delete("/api/products?productID=" + productID);
+         toast.success(res.data.message || "Yes");
+         fetchProducts();
+      } catch (error) {
+         const err = error as AxiosError<any>;
+         toast.error(err.response?.data.message || "Something Went Wrong");
       }
    };
    return (
@@ -45,8 +55,17 @@ function Products() {
                            value={product.productName}
                            className="text-black font-bold placeholder-input text-[20px]"
                         />
-                        <Button className="bg-gray-600">Edit</Button>
-                        <Button className="bg-red-400">Delete</Button>
+                        <Button className="bg-gray-600">
+                           <Link href={`/Products/edit/${product._id}`}>
+                              Edit
+                           </Link>
+                        </Button>
+                        <Button
+                           className="bg-red-400"
+                           onClick={(ev) => deleteProduct(product._id)}
+                        >
+                           Delete
+                        </Button>
                      </div>
                   ))}
             </div>

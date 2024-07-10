@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { writeFile } from "fs/promises";
+import uploadOnCloudinary from "@/services/cloudinary";
 
 export async function POST(req:NextRequest) {
     const formData = await req.formData();
@@ -16,13 +17,18 @@ export async function POST(req:NextRequest) {
 
     const buffer = Buffer.from(await file?.arrayBuffer())
     const fileName =  Date.now() + file.name;
-    console.log(file.path);
     
     try {
-        await writeFile(path.join(process.cwd(), "public/uploads/" + fileName),buffer)
-
+         await writeFile(path.join(process.cwd(), "public/uploads/" + fileName),buffer)
+        const res = await uploadOnCloudinary(`${path.resolve(path.join())}/public/uploads/${fileName}`)
+        
+        console.log(res);
+        if(res){
+            return NextResponse.json({message: "Image Upload Successfully", filePath: res}, {status: 200})
+        }
         //TODO take the local path and upload it on cloudinary and then remove from local storage
-        return NextResponse.json({message: "Image Upload Successfully", filePath: `/public/uploads/${fileName}`}, {status: 200})
+        console.log("some hdvbdflij");
+        
     } catch (error:any) {
         console.log("Upload Error: ", error);
         return NextResponse.json({message: error.message})

@@ -8,7 +8,7 @@ import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-function AddProducts() {
+function AddProducts(edit = false) {
    const router = useRouter();
    const [categories, setCategories] = useState([]);
    const [properties, setProperties]: any = useState([]);
@@ -198,9 +198,11 @@ function AddProducts() {
                         className="shadow w-28 h-28 bg-white rounded-xl "
                         key={index}
                      >
-                        <p className="text-wrap text-[30px]">
-                           {dev.split("")[1]}
-                        </p>
+                        <img
+                           src={dev}
+                           alt="some"
+                           className="w-full h-full object-cover object-center"
+                        />
                      </div>
                   ))}
                </div>

@@ -1,5 +1,15 @@
-import mongoose, { Schema } from "mongoose";
-
+import mongoose, { Mongoose, Schema } from "mongoose"; 
+export interface porductProps  {
+   _id:any;
+   productName: String;
+   productDescription: String;
+   price: String;
+   Images: Array<Object>;
+   category:mongoose.Types.ObjectId;
+   properties:Object;
+   stock:String;
+   addedBy:mongoose.Types.ObjectId;
+}
 const productSchema = new Schema(
    {
       productName: {

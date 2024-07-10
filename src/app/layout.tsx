@@ -23,14 +23,12 @@ export default function RootLayout({
    return (
       <html lang="en">
          <AuthProvider>
-            <body>
-               <div className="main flex" >
-               <Header />
-               <div className="content flex-grow">
-               {children}
+            <body className="bg-white">
+               <div className="main flex">
+                  <Header />
+                  <div className="content flex-grow">{children}</div>
                </div>
-               </div>
-               <Toaster />
+               <Toaster position="bottom-center" />
             </body>
          </AuthProvider>
       </html>
