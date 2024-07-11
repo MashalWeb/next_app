@@ -8,7 +8,7 @@ import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-function AddProducts(edit = false) {
+function AddProducts() {
    const router = useRouter();
    const [categories, setCategories] = useState([]);
    const [properties, setProperties]: any = useState([]);

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import AdmainCards from "@/components/AdmainCards";
 import { useRouter } from "next/navigation";
 import image from "@/components/profileimg.jpg";
+import { Charts } from "@/components/Carts";
 function Dashboard() {
    // const router = useRouter();
    // const [admains, setAdmain] = useState([]);
@@ -189,6 +190,9 @@ function Dashboard() {
                )}
             </div>
          </div> */}
+         <div className="flex w-full flex-row">
+            <Charts name="line" />
+         </div>
       </>
    );
 }
