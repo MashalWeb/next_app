@@ -9,14 +9,24 @@ export function Charts({ name = "bar" }: any) {
          id: "apexchart-example",
       },
       xaxis: {
-         categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+         categories: [
+            "jan",
+            "feb",
+            "mar",
+            "april",
+            "may",
+            "june",
+            "july",
+            "aug",
+            "sep",
+         ],
       },
    };
 
    const series = [
       {
          name: "series-1",
-         data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+         data: [230, 101, 23, 50, 49, 60, 70, 91, 32],
       },
    ];
 
@@ -27,7 +37,7 @@ export function Charts({ name = "bar" }: any) {
             options={option}
             series={series}
             height={200}
-            width={500}
+            width={450}
          />
       </>
    );

@@ -10,190 +10,230 @@ import AdmainCards from "@/components/AdmainCards";
 import { useRouter } from "next/navigation";
 import image from "@/components/profileimg.jpg";
 import { Charts } from "@/components/Carts";
+import {
+   BaggageClaimIcon,
+   BarChart4,
+   BarChart4Icon,
+   BarChartBig,
+   Box,
+   CalendarClockIcon,
+   DollarSign,
+   LucideBaggageClaim,
+   LucideCreditCard,
+   ShoppingBag,
+   ShoppingBasket,
+   ShoppingCartIcon,
+   User2Icon,
+   UserCheck2Icon,
+   WalletMinimal,
+} from "lucide-react";
+
 function Dashboard() {
-   // const router = useRouter();
-   // const [admains, setAdmain] = useState([]);
-   // const getAdmains = useCallback(async () => {
-   //    const { data } = await axios.get("/api/dashboard");
-   //    try {
-   //       setAdmain(data?.Admains || []);
-   //       console.log(admains);
-   //    } catch (error: any) {
-   //       console.log(error);
-   //       toast.error(error.message);
-   //    }
-   // }, [setAdmain, toast]);
-
-   // useEffect(() => {
-   //    getAdmains();
-   // }, [getAdmains]);
-   // const [user, setuser] = useState({
-   //    name: "",
-   //    email: "",
-   //    password: "",
-   // });
-
-   // const handleSubmit = async () => {
-   //    try {
-   //       const res = await axios.post("/api/sign-up", user);
-   //       toast.success(" Admain Register Successful");
-   //       router.replace("/Dashboard");
-   //    } catch (error) {
-   //       const AxiosError = error as AxiosError<any>;
-   //       let errorMessage = AxiosError.response?.data.message;
-   //       toast.error(errorMessage || "failed");
-   //       console.log("error message: ", AxiosError.message);
-   //    }
-   // };
-   // const handledelete = () => {};
    return (
-      <>
-         <div className="bg-gray-400 mx-6 mt-10 p-2 h-auto">
-            <div className="bg-gray-200 flex align-bottom w-full">
-               <div className="bg-red-100">
-                  <h1 className="text-[30px]">
-                     <span className="grd">Mashal Store </span>Dashboard
-                  </h1>
-                  <p className="para">
-                     Manage your products, orders and much more ..
+      <div className="p-1 main ml-5 mr-5 mt-3 w-auto ">
+         <div className="top w-full py-3 mt-2 flex justify-between items-center">
+            <div>
+               <h1>
+                  <span className="grd">Mashal Store</span> Dashbard
+               </h1>
+               <p className="para -mt-[3px]">
+                  Manage your products, orders and much more..
+               </p>
+            </div>
+            <div className="flex gap-x-2 align-middle h-12 w-max">
+               <div className="w-[47px] h-[47px] bg-gray-300 rounded-full overflow-hidden">
+                  <Image
+                     alt="profile image"
+                     src={image}
+                     width={47}
+                     height={47}
+                     className="object-cover object-center rounded-full"
+                  />
+               </div>
+               <div className="rounded-3xl sam-shad bg-white w-[170px] flex items-center justify-center">
+                  <p className="text-center">
+                     Hello, <span className="grd">Mashal</span>
                   </p>
                </div>
-               <div className="bg-red-300 h-10 flex align-middle justify-center gap-x-2">
+            </div>
+         </div>
+         <div className="bg w-full p-3 py-5 mt-4 rounded-2xl">
+            <div className="flex mb-7 flex-wrap justify-evenly gap-2 items-start">
+               <div className="p-4 bg-white cus-shad rounded-xl w-[200px] flex justify-between items-center transition-all hover:-translate-y-1">
                   <div>
-                     <Link href={"/"} className="">
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           fill="none"
-                           viewBox="0 0 24 24"
-                           strokeWidth={1.5}
-                           stroke="currentColor"
-                           className="size-7"
-                        >
-                           <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"
-                           />
-                        </svg>
-                     </Link>
+                     <h3>Today's Sales</h3>
+                     <p>
+                        13220.4 <span className="grd">PKR</span>
+                     </p>
                   </div>
-                  <div>
-                     <Image
-                        src={image}
-                        alt="Profile image"
-                        width={40}
-                        height={40}
-                        className="object-cover object-center rounded-full"
+                  <div className="p-[6px] bg-grd rounded-lg cus-shad">
+                     <DollarSign
+                        className="stroke-white drop-shadow"
+                        size={30}
                      />
                   </div>
+               </div>
+               <div className="p-4 bg-white cus-shad rounded-xl w-[212px] flex justify-between items-center transition-all hover:-translate-y-1">
                   <div>
-                     Hello <span className="grd">Mashal</span>
+                     <h3>Montly Sales</h3>
+                     <p className="b-para">
+                        145230.32 <span className="grd">PKR</span>
+                     </p>
+                  </div>
+                  <div className="p-[6px] bg-grd rounded-lg cus-shad">
+                     <BarChart4
+                        className="stroke-white drop-shadow"
+                        size={30}
+                     />
+                  </div>
+               </div>
+               <div className="p-4 bg-white cus-shad rounded-xl w-[212px] flex justify-between items-center transition-all hover:-translate-y-1">
+                  <div>
+                     <h3>Total Orders</h3>
+                     <p>543</p>
+                  </div>
+                  <div className="p-[6px] bg-grd rounded-lg cus-shad">
+                     <BaggageClaimIcon
+                        className="stroke-white drop-shadow"
+                        size={30}
+                     />
+                  </div>
+               </div>
+               <div className="p-4 bg-white cus-shad rounded-xl w-[212px] flex justify-between items-center transition-all hover:-translate-y-1">
+                  <div>
+                     <h3>Total Users</h3>
+                     <p>362</p>
+                  </div>
+                  <div className="p-[6px] bg-grd rounded-lg cus-shad">
+                     <UserCheck2Icon
+                        className="stroke-white drop-shadow"
+                        size={30}
+                     />
+                  </div>
+               </div>
+            </div>
+            <div className="flex justify-center gap-8 items-center flex-wrap ">
+               <div className="bg-white p-2 rounded-2xl sam-shad">
+                  <h2 className="text-center mt-2 mb-3 text-black">
+                     Montly Sales In Thousands
+                  </h2>
+                  <Charts name="bar" />
+               </div>
+               <div className="bg-white p-2 rounded-2xl sam-shad">
+                  <h2 className="text-center mt-2 mb-3 text-black">
+                     Daily Product Sales
+                  </h2>
+                  <Charts name="line" />
+               </div>
+            </div>
+            <div className="mt-7 bg-white mx-9 p-4 rounded-2xl cus-shad">
+               <div>
+                  <h2>Latest Orders</h2>
+                  <p className="para">Manage Your Latest Orders From Here</p>
+               </div>
+               <div className="cus-shad p-3 rounded-md mt-4 flex flex-nowrap justify-center overflow-auto w-full gap-x-1">
+                  <div className=" w-[220px] flex  justify-center items-center gap-x-2">
+                     <CalendarClockIcon
+                        className="cus-shad p-1 bg-grd stroke-white drop-shadow rounded-md"
+                        size={30}
+                     />
+                     <h4>Date</h4>
+                  </div>
+                  <div className=" w-[190px] flex  justify-center items-center gap-x-2">
+                     <LucideCreditCard
+                        className="cus-shad p-1 bg-grd stroke-white drop-shadow rounded-md"
+                        size={30}
+                     />
+                     <h4>Paid</h4>
+                  </div>
+                  <div className=" w-[350px] flex  justify-center items-center gap-x-2">
+                     <User2Icon
+                        className="cus-shad p-1 bg-grd stroke-white drop-shadow rounded-md"
+                        size={30}
+                     />
+                     <h4>Recipient</h4>
+                  </div>
+                  <div className=" w-[350px] flex  justify-center items-center gap-x-2">
+                     <ShoppingBag
+                        className="cus-shad p-1 bg-grd stroke-white drop-shadow rounded-md"
+                        size={30}
+                     />
+                     <h4>Products</h4>
+                  </div>
+               </div>
+               <div className="cus-shad p-3 rounded-md mt-4 flex flex-nowrap justify-center items-center overflow-auto w-full gap-x-1">
+                  <div className=" w-[220px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Friday, july 2024, 1:45 PM</p>
+                  </div>
+                  <div className=" w-[190px] flex flex-col items-center justify-center">
+                     <button className="non">No</button>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Yousaf Khan</p>
+                     <p className="sm-para">yousaf5343@gmail.com</p>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">
+                        HP Laptop Core i3 500 GB Hardisk{" "}
+                        <span className="grd">X3</span>
+                     </p>
+                  </div>
+               </div>
+               <div className="cus-shad p-3 rounded-md mt-4 flex flex-nowrap justify-center items-center overflow-auto w-full gap-x-1">
+                  <div className=" w-[220px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Sunday, jun 2024, 11:45 AM</p>
+                  </div>
+                  <div className=" w-[190px] flex flex-col items-center justify-center">
+                     <button className="succ">Yes</button>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Hassan Khan</p>
+                     <p className="sm-para">hassangk432@gmail.com</p>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">
+                        IPhone XR Black 256 GB Ram{" "}
+                        <span className="grd">X1</span>
+                     </p>
+                  </div>
+               </div>
+               <div className="cus-shad p-3 rounded-md mt-4 flex flex-nowrap justify-center items-center overflow-auto w-full gap-x-1">
+                  <div className=" w-[220px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Tuesday, jan 2024, 5:15 PM</p>
+                  </div>
+                  <div className=" w-[190px] flex flex-col items-center justify-center">
+                     <button className="non">No</button>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Jamil Khan</p>
+                     <p className="sm-para">jamil32s@gmail.com</p>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">
+                        Golden Parel Cream <span className="grd">X6</span>
+                     </p>
+                  </div>
+               </div>
+               <div className="cus-shad p-3 rounded-md mt-4 flex flex-nowrap justify-center items-center overflow-auto w-full gap-x-1">
+                  <div className=" w-[220px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Sunday, April 2024, 1:55 PM</p>
+                  </div>
+                  <div className=" w-[190px] flex flex-col items-center justify-center">
+                     <button className="succ">Yes</button>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">Abdullah Khan</p>
+                     <p className="sm-para">Abdullah43@gmail.com</p>
+                  </div>
+                  <div className=" w-[350px] flex flex-col items-center justify-center">
+                     <p className="sm-para">
+                        Bata Shose Black Color <span className="grd">X2</span>
+                     </p>
                   </div>
                </div>
             </div>
          </div>
-         {/* <div className=" px-6 py-5 ">
-            <div className="w-full bg-white/50 rounded px-5 flex justify-between p-2 py-3">
-               <div className="info bg-white px-2 py-1 w-[180px] rounded-full shadow-lg">
-                  <Image
-                     src={nextimag}
-                     alt="profile"
-                     width={40}
-                     className="border border-fuchsia-300 w-12 h-12 bg-white rounded-[50%] object-cover object-center inline-block"
-                  />
-                  <h3 className="inline-block ml-2">
-                     Hello, {useSession().data?.user.name}
-                  </h3>
-               </div>
-               <div className="bg-white ml-4 gap-2 px-2 py-1 w-[180px] rounded-full shadow-lg flex align-middle justify-center">
-                  
-                  
-               </div>
-            </div>
-            <div className="bg-white w-full mt-7 p-2 rounded-xl">
-               <h1 className="mb-3">Register New Admains</h1>
-               <form
-                  onSubmit={(e) => e.preventDefault()}
-                  className=" mt-2 p-1 flex flex-row flex-wrap w-ful align-middle"
-               >
-                  <div className=" flex flex-row flex-wrap gap-x-5 gap-y-2 flex-shrink align-middle justify-start ">
-                     <div className="flex flex-col">
-                        <label className="mx-[2px] text-gray-500 mb-1">
-                           Name
-                        </label>
-                        <input
-                           className="px-3 outline-none py-2 rounded w-[250px] text-[14px] border-[1px] border-violet-200 focus:border-[1px] focus:border-violet-500 transition-all"
-                           type="text"
-                           placeholder="Name"
-                           name="name"
-                           value={user.name}
-                           onChange={(e) =>
-                              setuser({ ...user, name: e.target.value })
-                           }
-                        />
-                     </div>
-                     <div className="flex flex-col">
-                        <label className="mx-[2px] text-gray-500 mb-1">
-                           Email
-                        </label>
-                        <input
-                           className="px-3 outline-none py-2 rounded w-[250px] text-[14px] border-[1px] border-violet-200 focus:border-[1px] focus:border-violet-500 transition-all"
-                           type="email"
-                           placeholder="email"
-                           name="email"
-                           value={user.email}
-                           onChange={(e) =>
-                              setuser({ ...user, email: e.target.value })
-                           }
-                        />
-                     </div>
-                     <div className="flex flex-col">
-                        <label className="mx-[2px] text-gray-500 mb-1">
-                           Password
-                        </label>
-                        <input
-                           className="px-3 outline-none py-2 rounded w-[250px] text-[14px] border-[1px] border-violet-200 focus:border-[1px] focus:border-violet-500 transition-all"
-                           type="password"
-                           placeholder="password"
-                           name="password"
-                           value={user.password}
-                           onChange={(e) =>
-                              setuser({ ...user, password: e.target.value })
-                           }
-                        />
-                     </div>
-                  </div>
-                  <div>
-                     <button
-                        className="bg-green-400 text-white px-3 outline-none py-2 rounded mt-[27px] mx-5"
-                        type="submit"
-                        onClick={handleSubmit}
-                     >
-                        Register
-                     </button>
-                  </div>
-               </form>
-            </div>
-            <div className="w-full mt-3 bg-white rounded-xl p-2">
-               <h1 className="mb-4">Admains List</h1>
-               {admains.length > 0 ? (
-                  admains.map((admain: any, i) => (
-                     <AdmainCards
-                        email={admain?.email}
-                        name={admain?.name}
-                        key={admain?._id}
-                        onDelete={handledelete}
-                     />
-                  ))
-               ) : (
-                  <p>No Admains</p>
-               )}
-            </div>
-         </div> */}
-         <div className="flex w-full flex-row">
-            <Charts name="line" />
-         </div>
-      </>
+      </div>
    );
 }
 

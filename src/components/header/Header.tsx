@@ -10,13 +10,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 function Header() {
-   const activeLink = `bg-gradient-to-r text-violet-600 shadow-lg from-teal-50 to-rose-100 transition-all`;
+   const activeLink = `cus-shad grd transition-all rounded-xl`;
 
    const pathname = usePathname();
 
    return (
       <>
-         <div className="sidebar w-[250px] min-h-screen s-sh hidden sm:block rounded-r-[20px]">
+         <div className="sidebar s-sh hidden sm:block rounded-r-[20px]">
             <Link
                href={"/Dashboard"}
                className="w-full flex align-middle justify-startmt-5 py-6"
@@ -41,13 +41,13 @@ function Header() {
             </Link>
             <Link
                href={"/Dashboard"}
-               className={`w-full flex  align-middle pl-10 justify-start  py-4 transition-all hover:shadow-lg ${
+               className={`w-full flex  align-middle pl-10 justify-start text-gray-500 py-4 transition-all  ${
                   pathname.startsWith("/Dashboard") ? activeLink : ""
                }`}
             >
                <LucideLayoutDashboard
                   className={
-                     pathname.includes("/Dashboard") ? "grd-ico" : "bg-red-200"
+                     pathname.includes("/Dashboard") ? "grd-ico mr-3" : "mr-3"
                   }
                />
 
@@ -55,48 +55,56 @@ function Header() {
             </Link>
             <Link
                href={"/Products"}
-               className={`w-full flex  align-middle pl-10 justify-start transition-all hover:shadow-lg  py-4 ${
+               className={`w-full flex  align-middle pl-10 justify-start text-gray-500 py-4 transition-all  ${
                   pathname.startsWith("/Products") ? activeLink : ""
-               } `}
+               }`}
             >
                <Boxes
-                  className={pathname.includes("/Products") ? "grd-ico" : ""}
+                  className={
+                     pathname.includes("/Products") ? "grd-ico mr-3" : "mr-3"
+                  }
                />
 
                <h2 className="mt-[2px] text-[17px] font-medium">Products</h2>
             </Link>
             <Link
                href={"/Categories"}
-               className={`w-full flex  align-middle pl-10 justify-start transition-all hover:shadow-lg py-4 ${
+               className={`w-full flex  align-middle pl-10 justify-start text-gray-500 py-4 transition-all  ${
                   pathname.startsWith("/Categories") ? activeLink : ""
-               } `}
+               }`}
             >
                <LucideClipboardSignature
-                  className={pathname.includes("/Categories") ? "grd-ico" : ""}
+                  className={
+                     pathname.includes("/Categories") ? "grd-ico mr-3" : "mr-3"
+                  }
                />
 
                <h2 className="mt-[2px] text-[17px] font-medium">Categories</h2>
             </Link>
             <Link
                href={"/Orders"}
-               className={`w-full flex gap-1 align-middle pl-10 justify-start transition-all hover:shadow-lg py-4 ${
+               className={`w-full flex  align-middle pl-10 justify-start text-gray-500 py-4 transition-all  ${
                   pathname.startsWith("/Orders") ? activeLink : ""
-               } `}
+               }`}
             >
                <ShoppingCart
-                  className={pathname.includes("/Orders") ? "grd-ico" : ""}
+                  className={
+                     pathname.includes("/Orders") ? "grd-ico mr-3" : "mr-3"
+                  }
                />
 
                <h2 className="mt-[2px] text-[17px] font-medium">Orders</h2>
             </Link>
             <Link
                href={"/Setting"}
-               className={`w-full flex gap-1 align-middle pl-10 justify-start transition-all hover:shadow-lg py-4 ${
+               className={`w-full flex  align-middle pl-10 justify-start text-gray-500 py-4 transition-all  ${
                   pathname.startsWith("/Setting") ? activeLink : ""
                }`}
             >
                <Settings
-                  className={pathname.includes("/Setting") ? "grd-ico" : ""}
+                  className={
+                     pathname.includes("/Setting") ? "grd-ico mr-3" : "mr-3"
+                  }
                />
                <h2 className="mt-[2px] text-[17px] font-medium">Setting</h2>
             </Link>

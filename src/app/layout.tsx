@@ -24,10 +24,8 @@ export default function RootLayout({
       <html lang="en">
          <AuthProvider>
             <body className="bg-white">
-               <div className="main flex">
-                  <Header />
-                  <div className="content flex-grow">{children}</div>
-               </div>
+               <Header />
+               <div className="md:ml-[250px] ml-[0px]">{children}</div>
                <Toaster position="bottom-center" />
             </body>
          </AuthProvider>
