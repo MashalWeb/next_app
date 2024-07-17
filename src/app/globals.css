@@ -20,6 +20,9 @@ h1 {
    color: rgb(118, 113, 113);
    font-size: 15px;
 }
+.cus-gray {
+   color: rgb(141, 141, 141);
+}
 .grd {
    background: -webkit-linear-gradient(
       45deg,
@@ -175,4 +178,21 @@ h4 {
    padding: 3px 35px;
    border-radius: 50px;
    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.041);
+}
+input::placeholder {
+   color: rgb(118, 113, 113);
+}
+.green {
+   background: -webkit-linear-gradient(
+      45deg,
+      rgb(112, 165, 55),
+      rgb(170, 255, 80)
+   );
+   color: #fff;
+   border-radius: 50px;
+   @apply cus-shad p-2 py-[10px];
+}
+.btn-grd {
+   @apply bg-grd text-white drop-shadow-md p-2 py-[10px];
+   border-radius: 50px;
 }

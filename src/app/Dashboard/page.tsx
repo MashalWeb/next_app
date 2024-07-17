@@ -1,33 +1,18 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import nextimag from "@/components/profileimg.jpg";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import axios, { AxiosError } from "axios";
-import toast from "react-hot-toast";
-import AdmainCards from "@/components/AdmainCards";
-import { useRouter } from "next/navigation";
 import image from "@/components/profileimg.jpg";
 import { Charts } from "@/components/Carts";
 import {
    BaggageClaimIcon,
    BarChart4,
-   BarChart4Icon,
-   BarChartBig,
-   Box,
    CalendarClockIcon,
    DollarSign,
-   LucideBaggageClaim,
    LucideCreditCard,
    ShoppingBag,
-   ShoppingBasket,
-   ShoppingCartIcon,
    User2Icon,
    UserCheck2Icon,
-   WalletMinimal,
 } from "lucide-react";
-
 function Dashboard() {
    return (
       <div className="p-1 main ml-5 mr-5 mt-3 w-auto ">
@@ -126,7 +111,7 @@ function Dashboard() {
                   <Charts name="line" />
                </div>
             </div>
-            <div className="mt-7 bg-white mx-9 p-4 rounded-2xl cus-shad">
+            <div className="mt-7 bg-white mx-7 p-4 rounded-2xl cus-shad">
                <div>
                   <h2>Latest Orders</h2>
                   <p className="para">Manage Your Latest Orders From Here</p>
