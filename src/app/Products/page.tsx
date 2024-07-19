@@ -13,7 +13,29 @@ import {
    User,
 } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 function Products() {
+   const [allProducts, setallProducts] = useState([]);
+   const [latestProducts, setlatestProducts] = useState([]);
+   useEffect(() => {
+      getProducts();
+   }, []);
+
+   async function getProducts() {
+      try {
+         const { data } = await axios.get("/api/products");
+         setallProducts(data?.allProducts);
+         setlatestProducts(data?.latestProducts);
+      } catch (error: any) {
+         toast.error(
+            error.message || "Something Went Wrong, Refresh The Page."
+         );
+      }
+   }
+   const a = "mashal khan";
    return (
       <div className="p-1 main ml-5 mr-5 mt-3 w-auto">
          <div className="top w-full py-3 mt-2 flex justify-between items-center">
@@ -71,105 +93,50 @@ function Products() {
                      </button>
                   </div>
                </div>
-               <div className="w-full rounded-2xl cus-shad p-2 px-3 bg-white basis-[46%] min-w-[350px]">
+               <div className="w-full min-h-[262px] rounded-2xl cus-shad p-2 px-3 bg-white basis-[46%] min-w-[350px]">
                   <h2 className="text-center">Recently Added</h2>
                   <div className="flex flex-col justify-start items-start mt-2 gap-y-2">
-                     <div className="p-2 bg-white cus-shad w-full rounded-md">
-                        <div>
-                           <p className="text-[14px]">
-                              HP Core i3 Laptop 4th Generation 6 GB Ram{" "}
-                              <span className="grd">X3</span>{" "}
-                           </p>
-                        </div>
-                        <div className="w-full flex items-center justify-between mt-1">
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <CalendarCheck2Icon
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
+                     {latestProducts.length > 0 &&
+                        latestProducts.map((product: any) => (
+                           <div
+                              key={product._id}
+                              className="p-2 bg-white cus-shad w-full rounded-md"
+                           >
+                              <div>
+                                 <p className="text-[14px] capitalize">
+                                    {product.productName}
+                                    <span className="grd">
+                                       {" "}
+                                       X {product.stock}
+                                    </span>{" "}
+                                 </p>
                               </div>
-                              <p className=" sm-para cus-gray">
-                                 28 May, 2024, 11:54 AM
-                              </p>
-                           </div>
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <User
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
+                              <div className="w-full flex items-center justify-between mt-1">
+                                 <div className="flex items-center gap-x-1">
+                                    <div className="p-[2px] rounded-md bg-grd">
+                                       <CalendarCheck2Icon
+                                          className="stroke-white drop-shadow"
+                                          size={20}
+                                       />
+                                    </div>
+                                    <p className=" sm-para cus-gray">
+                                       {product.createdAt}
+                                    </p>
+                                 </div>
+                                 <div className="flex items-center gap-x-1">
+                                    <div className="p-[2px] rounded-md bg-grd">
+                                       <User
+                                          className="stroke-white drop-shadow"
+                                          size={20}
+                                       />
+                                    </div>
+                                    <p className=" sm-para cus-gray">
+                                       By: {product.user[0].name}
+                                    </p>
+                                 </div>
                               </div>
-                              <p className=" sm-para cus-gray">
-                                 By: Mashal Khan
-                              </p>
                            </div>
-                        </div>
-                     </div>
-                     <div className="p-2 bg-white cus-shad w-full rounded-md">
-                        <div>
-                           <p className="text-[14px]">
-                              HP Core i3 Laptop 4th Generation 6 GB Ram{" "}
-                              <span className="grd">X3</span>{" "}
-                           </p>
-                        </div>
-                        <div className="w-full flex items-center justify-between mt-1">
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <CalendarCheck2Icon
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
-                              </div>
-                              <p className=" sm-para cus-gray">
-                                 28 May, 2024, 11:54 AM
-                              </p>
-                           </div>
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <User
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
-                              </div>
-                              <p className=" sm-para cus-gray">
-                                 By: Mashal Khan
-                              </p>
-                           </div>
-                        </div>
-                     </div>
-                     <div className="p-2 bg-white cus-shad w-full rounded-md">
-                        <div>
-                           <p className="text-[14px]">
-                              HP Core i3 Laptop 4th Generation 6 GB Ram{" "}
-                              <span className="grd">X3</span>{" "}
-                           </p>
-                        </div>
-                        <div className="w-full flex items-center justify-between mt-1">
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <CalendarCheck2Icon
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
-                              </div>
-                              <p className=" sm-para cus-gray">
-                                 28 May, 2024, 11:54 AM
-                              </p>
-                           </div>
-                           <div className="flex items-center gap-x-1">
-                              <div className="p-[2px] rounded-md bg-grd">
-                                 <User
-                                    className="stroke-white drop-shadow"
-                                    size={20}
-                                 />
-                              </div>
-                              <p className=" sm-para cus-gray">
-                                 By: Mashal Khan
-                              </p>
-                           </div>
-                        </div>
-                     </div>
+                        ))}
                   </div>
                </div>
             </div>

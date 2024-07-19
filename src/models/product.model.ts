@@ -1,10 +1,10 @@
-import mongoose, { Mongoose, Schema } from "mongoose"; 
+import mongoose, { model, Schema } from "mongoose"; 
 export interface porductProps  {
    _id:any;
    productName: String;
    productDescription: String;
    price: String;
-   Images: Array<Object>;
+   Images: Array<string>;
    category:mongoose.Types.ObjectId;
    properties:Object;
    stock:String;
@@ -14,15 +14,15 @@ const productSchema = new Schema(
    {
       productName: {
          type: String,
-         require: true,
+         require: [true, "product Name required"],
       },
       productDescription: {
          type: String,
-         require: true 
+         require: [true, "product Description required"] 
       },
       price: { 
          type: String, 
-         require: true 
+         require: [true, "product price required"]
       },
       
       Images: [
@@ -39,7 +39,7 @@ const productSchema = new Schema(
       ],
       stock: {
          type: Number, 
-         require: true
+         require: [true, "product stock required"]
       },
       addedBy: {
          type: mongoose.Types.ObjectId,
@@ -50,6 +50,6 @@ const productSchema = new Schema(
 );
 
 const productModel =
-   mongoose.models.Product || mongoose.model("Product", productSchema);
+   mongoose.models.Product || model("Product", productSchema);
 
 export default productModel;

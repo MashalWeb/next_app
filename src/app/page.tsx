@@ -10,24 +10,24 @@ export default function Page() {
    const [isLogin, setIsLogin] = useState(false);
 
    const GetUser = useCallback(async () => {
-      if (session.status === "authenticated") {
+      if (!session || session?.data?.user) {
+         setIsLogin(false);
+         router.push("/sign-in");
+      } else {
          setIsLogin(true);
          router.push("/Dashboard");
-      } else {
-         setIsLogin(false);
-         router.push("sign-in");
       }
    }, [isLogin, session.status]);
 
    useEffect(() => {
       GetUser();
-   }, [isLogin, GetUser]);
+   }, [isLogin, GetUser, session?.data]);
 
    return session.status === "loading" ? (
       <p>Loding</p>
    ) : isLogin ? (
-      <p>yes</p>
+      <p>no</p>
    ) : (
-      <p>No</p>
+      <p>yes</p>
    );
 }

@@ -8,6 +8,8 @@ export async function POST(req:NextRequest) {
     const formData = await req.formData();
 
     const file:any = formData.get("mainImages")
+    console.log("File: ", file);
+    
     if(!file){
         return NextResponse.json({
             message: "No File is recived",
@@ -20,18 +22,19 @@ export async function POST(req:NextRequest) {
     
     try {
          await writeFile(path.join(process.cwd(), "public/uploads/" + fileName),buffer)
-        const res = await uploadOnCloudinary(`${path.resolve(path.join())}/public/uploads/${fileName}`)
-        
-        console.log(res);
-        if(res){
-            return NextResponse.json({message: "Image Upload Successfully", filePath: res}, {status: 200})
+        const res = await uploadOnCloudinary(`${path.resolve(path.join())}/public/uploads/${fileName}`)   
+        console.log("Respone here: ", res);
+        if(res?.error){
+            console.log("Error");
+            return NextResponse.json({message: "Network Issue, Please Try Again."}, {status: 403})
         }
+       
+        return NextResponse.json({message: "Image Upload Successfully", filePath: res}, {status: 200})
+        
         //TODO take the local path and upload it on cloudinary and then remove from local storage
-        console.log("some hdvbdflij");
         
     } catch (error:any) {
-        console.log("Upload Error: ", error);
-        return NextResponse.json({message: error.message})
+        console.log("Upload Error: ", error)
         
     }
 }

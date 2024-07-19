@@ -10,11 +10,18 @@ export async function POST(req:NextRequest) {
 
     const {productName,productDescription,price,Images,category,properties,stock,addedBy} = await req.json()
     
-    if ((productDescription || productName || price || category || stock || addedBy) === ""){
+    if([
+        productDescription ,
+        productName , 
+        price , 
+        category , 
+        stock , 
+        addedBy].some((field) => field === "")
+    ){
         return NextResponse.json({
-            message: "Some Fields Are Missing",
+            message: `Some Fields Are Missing`,
             success: false
-        }) 
+        })
     }
     const categoryName = await Category.findOne({name: category})
     if(!category){
@@ -49,20 +56,78 @@ export async function POST(req:NextRequest) {
     })
 
     await Product.save()
-
+    console.log("Herer")
     return NextResponse.json({
         message: "New Product Created Successfully",
         success: true,
-        Product
+        Product: Product
     },{status: 201})
 }
 
 
 export async function GET(req:NextRequest) {
     await connection();
+    const latestProducts = await productModel.aggregate([
+        {
+          '$lookup': {
+            'from': 'admains', 
+            'localField': 'addedBy', 
+            'foreignField': '_id', 
+            'as': 'user'
+          }
+        }, {
+          '$sort': {
+            'createdAt': -1
+          }
+        }, {
+          '$limit': 3
+        }, {
+          '$project': {
+            'productName': 1, 
+            'stock': 1, 
+            'createdAt': 1, 
+            'user': 1
+          }
+        }
+      ])
+    const allProducts = await productModel.aggregate([
+        {
+          '$lookup': {
+            'from': 'categories', 
+            'localField': 'category', 
+            'foreignField': '_id', 
+            'as': 'productCategory'
+          }
+        }, {
+          '$lookup': {
+            'from': 'admains', 
+            'localField': 'addedBy', 
+            'foreignField': '_id', 
+            'as': 'user'
+          }
+        }, {
+          '$sort': {
+            'createdAt': -1
+          }
+        }, {
+          '$limit': 3
+        }, {
+          '$project': {
+            'productName': 1, 
+            'stock': 1, 
+            'createdAt': 1, 
+            'user': 1, 
+            'price': 1, 
+            'productCategory': 1, 
+            'Images': 1
+          }
+        }
+      ])
+    
     return NextResponse.json({
         message: "Products Fetch Successfully",
-        products: await productModel.find({}).populate(["category", "addedBy"])
+        allProducts: allProducts,
+        latestProducts: latestProducts
     }, {status: 200})
 }
 

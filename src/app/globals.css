@@ -179,7 +179,17 @@ h4 {
    border-radius: 50px;
    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.041);
 }
+.red-grd {
+   background: -webkit-linear-gradient(
+      45deg,
+      rgb(157, 28, 57),
+      rgb(255, 56, 103)
+   );
+}
 input::placeholder {
+   color: rgb(118, 113, 113);
+}
+textarea::placeholder {
    color: rgb(118, 113, 113);
 }
 .green {
@@ -191,6 +201,13 @@ input::placeholder {
    color: #fff;
    border-radius: 50px;
    @apply cus-shad p-2 py-[10px];
+}
+.bg-green {
+   background: -webkit-linear-gradient(
+      45deg,
+      rgb(112, 165, 55),
+      rgb(170, 255, 80)
+   );
 }
 .btn-grd {
    @apply bg-grd text-white drop-shadow-md p-2 py-[10px];
