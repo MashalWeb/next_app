@@ -46,7 +46,7 @@ function Dashboard() {
             <div className="flex mb-7 flex-wrap justify-evenly gap-2 items-start">
                <div className="p-4 bg-white cus-shad rounded-xl w-[200px] flex justify-between items-center transition-all hover:-translate-y-1">
                   <div>
-                     <h3>Today's Sales</h3>
+                     <h3>Today Sales</h3>
                      <p>
                         13220.4 <span className="grd">PKR</span>
                      </p>
