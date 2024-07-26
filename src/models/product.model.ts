@@ -1,3 +1,4 @@
+import moment from "moment";
 import mongoose, { model, Schema } from "mongoose"; 
 export interface porductProps  {
    _id:any;
@@ -44,7 +45,8 @@ const productSchema = new Schema(
       addedBy: {
          type: mongoose.Types.ObjectId,
          ref: "Admain"
-      }
+      },
+      
    },
    { timestamps: true }
 );

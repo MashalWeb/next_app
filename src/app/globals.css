@@ -165,7 +165,7 @@ h4 {
 }
 
 .sm-para {
-   font-size: 13px;
+   font-size: 15px;
 }
 
 .non {
@@ -212,4 +212,7 @@ textarea::placeholder {
 .btn-grd {
    @apply bg-grd text-white drop-shadow-md p-2 py-[10px];
    border-radius: 50px;
+}
+html {
+   @apply antialiased;
 }

@@ -67,68 +67,84 @@ export async function POST(req:NextRequest) {
 
 export async function GET(req:NextRequest) {
     await connection();
-    const latestProducts = await productModel.aggregate([
-        {
-          '$lookup': {
-            'from': 'admains', 
-            'localField': 'addedBy', 
-            'foreignField': '_id', 
-            'as': 'user'
-          }
-        }, {
-          '$sort': {
-            'createdAt': -1
-          }
-        }, {
-          '$limit': 3
-        }, {
-          '$project': {
-            'productName': 1, 
-            'stock': 1, 
-            'createdAt': 1, 
-            'user': 1
-          }
-        }
-      ])
-    const allProducts = await productModel.aggregate([
-        {
-          '$lookup': {
-            'from': 'categories', 
-            'localField': 'category', 
-            'foreignField': '_id', 
-            'as': 'productCategory'
-          }
-        }, {
-          '$lookup': {
-            'from': 'admains', 
-            'localField': 'addedBy', 
-            'foreignField': '_id', 
-            'as': 'user'
-          }
-        }, {
-          '$sort': {
-            'createdAt': -1
-          }
-        }, {
-          '$limit': 3
-        }, {
-          '$project': {
-            'productName': 1, 
-            'stock': 1, 
-            'createdAt': 1, 
-            'user': 1, 
-            'price': 1, 
-            'productCategory': 1, 
-            'Images': 1
-          }
-        }
-      ])
     
-    return NextResponse.json({
+    const {searchParams} = new URL(req.url)
+    
+    if (searchParams.size > 0) {
+      const productID = searchParams.get("productID")
+      const productByID = await productModel.findById({_id: productID});
+
+      return NextResponse.json({
         message: "Products Fetch Successfully",
-        allProducts: allProducts,
-        latestProducts: latestProducts
+        product: productByID
     }, {status: 200})
+    }
+      else{
+        const latestProducts = await productModel.aggregate([
+          {
+            '$lookup': {
+              'from': 'admains', 
+              'localField': 'addedBy', 
+              'foreignField': '_id', 
+              'as': 'user'
+            }
+          }, {
+            '$sort': {
+              'createdAt': -1
+            }
+          }, {
+            '$limit': 3
+          }, {
+            '$project': {
+              'productName': 1, 
+              'stock': 1, 
+              'createdAt': 1, 
+              'user': 1
+            }
+          }
+        ])
+      const allProducts = await productModel.aggregate([
+          {
+            '$lookup': {
+              'from': 'categories', 
+              'localField': 'category', 
+              'foreignField': '_id', 
+              'as': 'productCategory'
+            }
+          }, {
+            '$lookup': {
+              'from': 'admains', 
+              'localField': 'addedBy', 
+              'foreignField': '_id', 
+              'as': 'user'
+            }
+          }, {
+            '$sort': {
+              'createdAt': -1
+            }
+          }, 
+          {
+            '$limit': 4,
+          },
+          {
+            '$project': {
+              'productName': 1, 
+              'stock': 1, 
+              'createdAt': 1, 
+              'user': 1, 
+              'price': 1, 
+              'productCategory': 1, 
+              'Images': 1
+            }
+          }
+        ])
+      
+      return NextResponse.json({
+          message: "Products Fetch Successfully",
+          allProducts: allProducts,
+          latestProducts: latestProducts
+      }, {status: 200})
+      }
 }
 
 

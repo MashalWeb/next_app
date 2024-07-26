@@ -13,6 +13,8 @@ import {
    User2Icon,
    UserCheck2Icon,
 } from "lucide-react";
+import LineChart from "@/components/Ej2Charts";
+
 function Dashboard() {
    return (
       <div className="p-1 main ml-5 mr-5 mt-3 w-auto ">
