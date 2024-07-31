@@ -14,7 +14,7 @@ export async function POST(req:NextRequest) {
         productDescription ,
         productName , 
         price , 
-        category , 
+        category, 
         stock , 
         addedBy].some((field) => field === "")
     ){
@@ -64,7 +64,6 @@ export async function POST(req:NextRequest) {
     },{status: 201})
 }
 
-
 export async function GET(req:NextRequest) {
     await connection();
     
@@ -72,7 +71,7 @@ export async function GET(req:NextRequest) {
     
     if (searchParams.size > 0) {
       const productID = searchParams.get("productID")
-      const productByID = await productModel.findById({_id: productID});
+      const productByID = await productModel.findById({_id: productID}).populate('category');
 
       return NextResponse.json({
         message: "Products Fetch Successfully",
@@ -147,8 +146,6 @@ export async function GET(req:NextRequest) {
       }
 }
 
-
-// delete handler
 export async function DELETE(req:NextRequest) {
     await connection();
     const {searchParams} = new URL(req.url)
@@ -178,4 +175,68 @@ export async function DELETE(req:NextRequest) {
     }
 }
 
+export async function PUT(req:NextRequest) {
+  await connection();
 
+    const {productName,productDescription,price,Images,category,properties,stock,addedBy, productID} = await req.json()
+    
+    if([
+        productDescription ,
+        productName , 
+        price , 
+        category , 
+        stock , 
+        addedBy].some((field) => field === "")
+    ){
+        return NextResponse.json({
+            message: `Some Fields Are Missing`,
+            success: false
+        })
+    }
+    const categoryName = await Category.findOne({name: category})
+    if(!category){
+        return NextResponse.json({
+            message: "Category is missing",
+            success: false
+        })
+    }
+
+    if(Images?.length <= 0){
+        return NextResponse.json({
+            message: "Images Are Required",
+            success: false
+        })
+    }
+    if(properties?.length <= 0){
+        return NextResponse.json({
+            message: "Properties are Missing",
+            success: false
+        })
+    }
+
+    const updateDoc =  await productModel.updateOne(
+      {_id: productID},
+      {
+        Images,
+        productDescription,
+        productName,
+        price,
+        category: categoryName._id,
+        properties,
+        stock,
+        addedBy
+      }
+    )
+
+    if (updateDoc) {
+      return NextResponse.json({
+        message: "Product Updated Successfully",
+        success: true
+    })
+    }
+
+    return NextResponse.json({
+        message: "Something Went Wrong",
+        success: false
+    })
+}

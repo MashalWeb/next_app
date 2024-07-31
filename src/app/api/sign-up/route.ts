@@ -13,6 +13,7 @@ export async function POST(Request: NextRequest) {
          name,
          email,
       });
+
       if (isUserExist) {
          return NextResponse.json(
             {
@@ -29,6 +30,7 @@ export async function POST(Request: NextRequest) {
          email,
          password: hashPassword,
       });
+
       await newAdmain.save();
       return NextResponse.json(
          {
@@ -40,8 +42,10 @@ export async function POST(Request: NextRequest) {
             status: 200,
          }
       );
+
    } catch (error: any) {
       console.error("ERROR_REGISTRING_USER : ", error);
+      
       return NextResponse.json(
          {
             success: false,

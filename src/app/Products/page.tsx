@@ -9,7 +9,6 @@ import {
    ImageIcon,
    LucideCandlestickChart,
    LucideClipboardSignature,
-   MoreHorizontal,
    Search,
    ShoppingBag,
    User,
@@ -140,9 +139,11 @@ function Products() {
                         </button>
                      </Link>
 
-                     <button className="btn-grd w-[250px] font-medium text-[20px] mt-3">
-                        List Products
-                     </button>
+                     <Link href={"/Products/list_all"}>
+                        <button className="btn-grd w-[250px] font-medium text-[20px] mt-3">
+                           List Products
+                        </button>
+                     </Link>
                   </div>
                </div>
                <div className="w-full min-h-[262px] rounded-2xl cus-shad p-2 px-3 bg-white basis-[46%] min-w-[350px]">

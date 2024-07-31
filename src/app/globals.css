@@ -216,3 +216,6 @@ textarea::placeholder {
 html {
    @apply antialiased;
 }
+button {
+   @apply hover:saturate-150 transition-all;
+}
