@@ -232,9 +232,6 @@ function Setting() {
                            <p className="sm-para">{user.email}</p>
                         </div>
                         <div className="w-[300px] flex items-center justify-center gap-1">
-                           <button className="bg-grd rounded-3xl p-2 px-3 flex gap-1 text-white">
-                              Edit <Edit />
-                           </button>
                            <button
                               onClick={(ev) => handleDeleteUser(user._id)}
                               className="red-grd rounded-3xl p-2 px-3 flex gap-1 text-white"
