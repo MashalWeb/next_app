@@ -13,7 +13,6 @@ import {
    User2Icon,
    UserCheck2Icon,
 } from "lucide-react";
-import LineChart from "@/components/Ej2Charts";
 
 function Dashboard() {
    return (
